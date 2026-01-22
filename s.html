@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Track & Burn</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(#ffeaea, #fff3e0, #e8f5e9);
+    text-align: center;
+    direction: rtl;
+}
+
+header {
+    background: linear-gradient(to left, #ff8a80, #ffb74d, #81c784);
+    color: white;
+    padding: 20px;
+    border-radius: 0 0 25px 25px;
+}
+
+header img {
+    width: 120px;
+    margin-top: 10px;
+}
+
+.container {
+    background: #ffffff;
+    width: 340px;
+    margin: 25px auto;
+    padding: 20px;
+    border-radius: 18px;
+    box-shadow: 0 0 15px rgba(255,138,128,0.4);
+}
+
+.container img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+select, input {
+    width: 90%;
+    padding: 9px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ffccbc;
+}
+
+button {
+    background: linear-gradient(to right, #ff8a80, #ffb74d);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: linear-gradient(to right, #ff5252, #ffa726);
+}
+
+.result {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: bold;
+    color: #66bb6a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🥗 Track & Burn</h1>
+    <img src="https://static.thenounproject.com/png/calories-icon-4773532-512.png" alt="Calories Image">
+</header>
+
+<div class="container">
+<img src="https://static.thenounproject.com/png/1360157-200.png" alt="Food Icon">
+<h3>🍽️   السعرات المتناولة</h3>
+
+<label>نوع الطعام:</label>
+<select id="food">
+    <option value="4">🍞 الكربوهيدرات</option>
+    <option value="2">🍄‍🟫 الخضروات والفواكه </option>
+    <option value="4">🥩 البروتينات </option>
+    <option value="9"> 🍩 الدهون والسكريات </option>
+</select>
+
+<label>الوزن (جرام):</label>
+<input type="number" id="foodWeight">
+
+<button onclick="calculateFood()">احسب السعرات</button>
+<div class="result" id="foodResult"></div>
+</div>
+
+<div class="container">
+<img src="https://static.thenounproject.com/png/2788591-200.png" alt="Activity Icon">
+<h3>🏃‍♀️   النشاط البدني</h3>
+<h4> يحسب السعرات المحروقة من خلال التمرين المحدد</h4>
+<label>نوع النشاط:</label>
+<select id="activity">
+    <option value="4">🚶‍♀️ مشي</option>
+    <option value="8">🏃‍♂️ جري</option>
+    <option value="6">🏋️‍♀️ تمارين</option>
+</select>
+
+<label>المدة (بالدقائق):</label>
+<input type="number" id="time">
+
+<button onclick="calculateBurn()">احسب المحروقة</button>
+<div class="result" id="burnResult"></div>
+</div>
+
+<div class="container">
+<img src="https://static.thenounproject.com/png/2400342-200.png" alt="Weight Icon">
+<h3>⚖️برنامج حساب السعرات</h3>
+<h4> تحديد عدد السعرات اللازم تناولها للوصول للوزن المحدد</h4>
+<label>الوزن (كجم):</label>
+<input type="number" id="bodyWeight">
+
+<button onclick="calculateDiet()">احسب السعرات</button>
+<div class="result" id="dietResult"></div>
+</div>
+
+<script>
+let eatenCalories = 0;
+let burnedCalories = 0;
+
+function calculateFood() {
+    let food = document.getElementById("food").value;
+    let weight = document.getElementById("foodWeight").value;
+    if (weight <= 0) {
+        document.getElementById("foodResult").innerHTML = "⚠️ أدخل وزن صحيح";
+        return;
+    }
+    eatenCalories = food * weight;
+    document.getElementById("foodResult").innerHTML =
+    "🍽️ السعرات المتناولة: " + eatenCalories.toFixed(1);
+}
+
+function calculateBurn() {
+    let activity = document.getElementById("activity").value;
+    let time = document.getElementById("time").value;
+    if (time <= 0) {
+        document.getElementById("burnResult").innerHTML = "⚠️ أدخل مدة صحيحة";
+        return;
+    }
+    burnedCalories = activity * time;
+    let net = eatenCalories - burnedCalories;
+    document.getElementById("burnResult").innerHTML =
+    "🔥 المحروقة: " + burnedCalories.toFixed(1) +
+    "<br>📊 الصافي: " + net.toFixed(1);
+}
+
+function calculateDiet() {
+    let weight = document.getElementById("bodyWeight").value;
+    if (weight <= 0) {
+        document.getElementById("dietResult").innerHTML = "⚠️ أدخل وزن صحيح";
+        return;
+    }
+    let maintenance = weight * 30;
+    let loss = maintenance - 500;
+    document.getElementById("dietResult").innerHTML =
+    "✅ السعرات المناسبة لإنقاص الوزن: " + loss;
+}
+</script>
+
+</body>
+</html>
+
+
+
